@@ -1,0 +1,4 @@
+ssh-keygen -t rsa -b 4096 -f terraform-key
+
+ssh -i terraform-key ubuntu@3.85.59.244
+
