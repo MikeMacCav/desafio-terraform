@@ -2,8 +2,8 @@
 # 🚀 Desafio SRE/DevOps - Configuração de Infraestrutura com Terraform e Deploy de Containers
 Este repositório contém a configuração da infraestrutura utilizando Terraform, além da configuração de um servidor AWS EC2 para deploy de containers Docker.
 
-📌 # Passo a Passo - O que foi feito até agora
-1️⃣ # Configuração Inicial do Ambiente
+# 📌 Passo a Passo - O que foi feito até agora
+# 1️⃣ Configuração Inicial do Ambiente
 Instalei o Terraform e configurei o ambiente local.
 Criei uma chave SSH para acessar a instância EC2:
 sh
@@ -15,7 +15,7 @@ sh
 Copiar
 Editar
 aws ec2 import-key-pair --key-name "terraform-key" --public-key-material fileb://F:/terraform/keys/terraform-key.pub
-2️⃣ # Criação da Infraestrutura na AWS
+# 2️⃣ Criação da Infraestrutura na AWS
 Criei um arquivo main.tf com:
 
 Configuração do provider AWS.
@@ -47,7 +47,7 @@ Editar
 terraform init
 terraform plan
 terraform apply
-3️⃣ # Uso de Instância Existente ao invés de Criar uma Nova
+# 3️⃣ Uso de Instância Existente ao invés de Criar uma Nova
 Criei um data source no Terraform para reutilizar uma instância EC2 existente:
 hcl
 Copiar
@@ -65,7 +65,7 @@ Editar
 terraform import aws_instance.app_server i-0bb54181aed6221ec
 ⚠️ Erro encontrado: "resource address does not exist in the configuration".
 🔹 Correção: Criei a configuração do recurso antes de importar.
-4️⃣ # Provisionamento e Deploy de Containers com Docker
+# 4️⃣ Provisionamento e Deploy de Containers com Docker
 # Criei um provisionador remoto (remote-exec) para instalar o Docker e executar os containers:
 hcl
 Copiar
@@ -103,7 +103,7 @@ Error: remote-exec provisioner error
 Failed to parse ssh private key: ssh: this private key is passphrase protected
 ⚠️ Problema: A chave privada está protegida por passphrase e o Terraform não consegue usá-la diretamente.
 🔹 Solução: Precisei adicionar a chave ao ssh-agent ou criar uma nova sem passphrase.
-5️⃣ # Correção do Erro de Chave SSH
+# 5️⃣ Correção do Erro de Chave SSH
 Para usar a chave protegida no Windows (Git Bash) ou Linux/macOS:
 sh
 Copiar
@@ -116,13 +116,13 @@ Copiar
 Editar
 ssh-keygen -t rsa -b 4096 -m PEM -f F:/terraform/keys/terraform-key -N ""
 aws ec2 import-key-pair --key-name "terraform-key" --public-key-material fileb://F:/terraform/keys/terraform-key.pub
-🚀 # Próximos Passos
-✅ Resolver o problema da chave SSH.
-✅ Testar novamente o deploy com terraform apply.
-⏳ Configurar volumes persistentes no MySQL.
-⏳ Melhorar a organização dos Dockerfiles e adicionar um README.md no repositório do desafio.
-📌 Status: Em andamento
-📌 Tecnologias utilizadas:
-✅ Terraform - Automação da infraestrutura
-✅ AWS EC2 - Instância do servidor
-✅ Docker - Deploy de containers
+# 🚀 Próximos Passos
+# ✅ Resolver o problema da chave SSH.
+# ✅ Testar novamente o deploy com terraform apply.
+# ⏳ Configurar volumes persistentes no MySQL.
+# ⏳ Melhorar a organização dos Dockerfiles e adicionar um README.md no repositório do desafio.
+# 📌 Status: Em andamento
+# 📌 Tecnologias utilizadas:
+# ✅ Terraform - Automação da infraestrutura
+# ✅ AWS EC2 - Instância do servidor
+# ✅ Docker - Deploy de containers
