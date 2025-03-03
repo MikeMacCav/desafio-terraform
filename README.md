@@ -1,5 +1,5 @@
 
-🚀 # Desafio SRE/DevOps - Configuração de Infraestrutura com Terraform e Deploy de Containers
+# 🚀 Desafio SRE/DevOps - Configuração de Infraestrutura com Terraform e Deploy de Containers
 Este repositório contém a configuração da infraestrutura utilizando Terraform, além da configuração de um servidor AWS EC2 para deploy de containers Docker.
 
 📌 # Passo a Passo - O que foi feito até agora
