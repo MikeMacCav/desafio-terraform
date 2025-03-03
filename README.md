@@ -1,21 +1,22 @@
+
 🚀 Desafio SRE/DevOps - Configuração de Infraestrutura com Terraform e Deploy de Containers
 Este repositório contém a configuração da infraestrutura utilizando Terraform, além da configuração de um servidor AWS EC2 para deploy de containers Docker.
 
 📌 Passo a Passo - O que foi feito até agora
 1️⃣ Configuração Inicial do Ambiente
-Instalamos o Terraform e configuramos o ambiente local.
-Criamos uma chave SSH para acessar a instância EC2:
+Instalei o Terraform e configurei o ambiente local.
+Criei uma chave SSH para acessar a instância EC2:
 sh
 Copiar
 Editar
 ssh-keygen -t rsa -b 4096 -m PEM -f F:/terraform/keys/terraform-key -N ""
-Importamos a chave pública para a AWS:
+Importei a chave pública para a AWS:
 sh
 Copiar
 Editar
 aws ec2 import-key-pair --key-name "terraform-key" --public-key-material fileb://F:/terraform/keys/terraform-key.pub
 2️⃣ Criação da Infraestrutura na AWS
-Criamos um arquivo main.tf com:
+Criei um arquivo main.tf com:
 
 Configuração do provider AWS.
 Definição de um grupo de segurança.
@@ -37,7 +38,8 @@ resource "aws_instance" "app_server" {
     Name = "DesafioTerraform-EC2"
   }
 }
-Aplicamos a configuração:
+
+Apliquei a configuração:
 
 sh
 Copiar
@@ -46,7 +48,7 @@ terraform init
 terraform plan
 terraform apply
 3️⃣ Uso de Instância Existente ao invés de Criar uma Nova
-Criamos um data source no Terraform para reutilizar uma instância EC2 existente:
+Criei um data source no Terraform para reutilizar uma instância EC2 existente:
 hcl
 Copiar
 Editar
@@ -56,15 +58,15 @@ data "aws_instance" "app_server" {
     values = ["DesafioTerraform-EC2"]
   }
 }
-Tentamos importar a instância existente:
+Tentei importar a instância existente:
 sh
 Copiar
 Editar
 terraform import aws_instance.app_server i-0bb54181aed6221ec
 ⚠️ Erro encontrado: "resource address does not exist in the configuration".
-🔹 Correção: Criamos a configuração do recurso antes de importar.
+🔹 Correção: Criei a configuração do recurso antes de importar.
 4️⃣ Provisionamento e Deploy de Containers com Docker
-Criamos um provisionador remoto (remote-exec) para instalar o Docker e executar os containers:
+Criei um provisionador remoto (remote-exec) para instalar o Docker e executar os containers:
 hcl
 Copiar
 Editar
@@ -93,14 +95,14 @@ resource "null_resource" "deploy_containers" {
     ]
   }
 }
-Rodamos terraform apply, mas encontramos um erro de SSH:
+Rodei terraform apply, mas encontrei um erro de SSH:
 vbnet
 Copiar
 Editar
 Error: remote-exec provisioner error
 Failed to parse ssh private key: ssh: this private key is passphrase protected
 ⚠️ Problema: A chave privada está protegida por passphrase e o Terraform não consegue usá-la diretamente.
-🔹 Solução: Precisamos adicionar a chave ao ssh-agent ou criar uma nova sem passphrase.
+🔹 Solução: Precisei adicionar a chave ao ssh-agent ou criar uma nova sem passphrase.
 5️⃣ Correção do Erro de Chave SSH
 Para usar a chave protegida no Windows (Git Bash) ou Linux/macOS:
 sh
