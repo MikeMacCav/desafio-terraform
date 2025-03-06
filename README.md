@@ -129,11 +129,11 @@ aws ec2 import-key-pair --key-name "terraform-key" --public-key-material fileb:/
 
 
 # 📌 Atualização: 06/03/2025 - Deploy do container realizado com sucesso.
-- Print do Deploy:
+# Print do Deploy:
 ![image](https://github.com/user-attachments/assets/736879f4-b230-4eb9-ac6a-b61738d00257)
 
-- Relatório Completo do Deploy
-F:\terraform\desafio-terraform>terraform apply -auto-approve
+# Relatório Completo do Deploy
+- F:\terraform\desafio-terraform>terraform apply -auto-approve
 data.aws_instance.app_server: Reading...
 aws_key_pair.ssh_key: Refreshing state... [id=terraform-key]
 aws_security_group.instance_sg: Refreshing state... [id=sg-0c98dd5ff33ab0e6e]
