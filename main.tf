@@ -2,9 +2,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Dados da instância já existente
+# Buscando dados da instância existente
 data "aws_instance" "app_server" {
-  instance_id = "i-0bb54181aed6221ec"
+  filter {
+    name   = "tag:Name"
+    values = ["DesafioTerraform-EC2"]
+  }
 }
 
 # Provisionamento do Docker e Deploy dos Containers
@@ -13,7 +16,7 @@ resource "null_resource" "deploy_containers" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("F:/terraform/keys/terraform-key") # Caminho da chave privada
+      private_key = file("F:/terraform/keys/terraform-key-new.pem") # Caminho da chave privada
       host        = data.aws_instance.app_server.public_ip
     }
 
@@ -27,7 +30,11 @@ resource "null_resource" "deploy_containers" {
       "sudo docker build -t apache-container -f apache/Dockerfile .",
       "sudo docker build -t container-mysql -f mysql/Dockerfile .",
       "sudo docker run -d --name apache-container -p 80:80 apache-container",
-      "sudo docker run -d --name container-mysql -p 3306:3306 container-mysql"
+      "sudo docker run -d --name container-mysql -p 3306:3306 container-mysql",
+      "cd ~/desafio-sre-devops/mysql && docker build -t container-mysql .", # Nova linha em diante
+      "docker stop mysql-container || true",
+      "docker rm mysql-container || true",
+      "docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=metroid container-mysql"
     ]
   }
 }
