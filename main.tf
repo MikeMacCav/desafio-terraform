@@ -2,40 +2,52 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Buscando dados da instância existente
-data "aws_instance" "app_server" {
-  filter {
-    name   = "tag:Name"
-    values = ["DesafioTerraform-EC2"]
+resource "aws_instance" "app_server" {
+  ami           = "ami-011e48799a29115e9" # AMI do Ubuntu 20.04
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.ssh_key.key_name
+  security_groups = [aws_security_group.sre_sg.name] # ✅ Nome corrigido
+
+  tags = {
+    Name = "DesafioTerraform-EC2"
   }
 }
 
-# Provisionamento do Docker e Deploy dos Containers
-resource "null_resource" "deploy_containers" {
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("F:/terraform/keys/terraform-key-new.pem") # Caminho da chave privada
-      host        = data.aws_instance.app_server.public_ip
-    }
+resource "aws_security_group" "sre_sg" {
+  name        = "sre_security_group"
+  description = "Permitir acesso SSH, HTTP e MySQL"
 
-    inline = [
-      "sudo apt update -y",
-      "sudo apt install -y docker.io",
-      "sudo systemctl start docker",
-      "sudo systemctl enable docker",
-      "sudo usermod -aG docker ubuntu",
-      "cd desafio-sre-devops",
-      "sudo docker build -t apache-container -f apache/Dockerfile .",
-      "sudo docker build -t container-mysql -f mysql/Dockerfile .",
-      "sudo docker run -d --name apache-container -p 80:80 apache-container",
-      "sudo docker run -d --name container-mysql -p 3306:3306 container-mysql",
-      "cd ~/desafio-sre-devops/mysql && docker build -t container-mysql .", # Nova linha em diante
-      "docker stop mysql-container || true",
-      "docker rm mysql-container || true",
-      "docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=metroid container-mysql"
-    ]
+  # ❌ Removendo vpc_id para usar a VPC padrão da AWS
+  # Se quiser usar uma VPC específica, crie um `aws_vpc` antes e referencie aqui
+
+  ingress {
+    description = "Acesso SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["179.255.125.210/32"] # ⚠️ Permite SSH de qualquer lugar (idealmente, restrinja ao seu IP)
+  }
+
+  ingress {
+    description = "Acesso HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # ⚠️ Permite HTTP de qualquer lugar
+  }
+
+  ingress {
+    description = "Acesso ao MySQL"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # ⚠️ Idealmente, restrinja ao seu IP
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"] # Permite saída para qualquer IP
   }
 }
-
