@@ -352,7 +352,7 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 
 # Relatório completo da restrinção:
 F:\terraform\desafio-terraform>terraform apply -auto-approve
-null_resource.deploy_containers: Refreshing state... [id=1573174304318784348]
+- null_resource.deploy_containers: Refreshing state... [id=1573174304318784348]
 aws_key_pair.ssh_key: Refreshing state... [id=terraform-key]
 aws_security_group.instance_sg: Refreshing state... [id=sg-0c98dd5ff33ab0e6e]
 
