@@ -12,22 +12,22 @@ provider "aws" {
 # 2️⃣ Criação da Instância EC2
 - Configurei a instância EC2 com a AMI do Ubuntu 20.04 e o tipo t2.micro. Também especifiquei a chave SSH e o grupo de segurança:
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-011e48799a29115e9" # AMI do Ubuntu 20.04
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.ssh_key.key_name
-  security_groups = [aws_security_group.sre_sg.name]
+- resource "aws_instance" "app_server" {
+  - ami           = "ami-011e48799a29115e9" # AMI do Ubuntu 20.04
+  - instance_type = "t2.micro"
+  - key_name      = aws_key_pair.ssh_key.key_name
+  - security_groups = [aws_security_group.sre_sg.name]
 
-  tags = {
-    Name = "DesafioTerraform-EC2"
-  }
-}
+  - tags = {
+    - Name = "DesafioTerraform-EC2"
+  - }
+- }
 # 3️⃣ Criação da Chave SSH
 - Para acessar a instância de forma segura, gerei uma chave SSH e a adicionei ao Terraform:
 
-resource "aws_key_pair" "ssh_key" {
-  key_name   = "terraform-key"
-  public_key = file("~/.ssh/id_rsa.pub") # Substitua pelo caminho correto da chave pública
+- resource "aws_key_pair" "ssh_key" {
+- key_name   = "terraform-key"
+- public_key = file("~/.ssh/id_rsa.pub") # Substitua pelo caminho correto da chave pública
 }
 # 4️⃣ Configuração do Security Group
 - Configurei um Security Group para permitir acessos essenciais:
@@ -36,41 +36,41 @@ resource "aws_key_pair" "ssh_key" {
 - HTTP (80): Acesso liberado para qualquer IP
 _ MySQL (3306): Acesso liberado para qualquer IP (mas posso restringir depois)
 
-resource "aws_security_group" "sre_sg" {
-  name        = "sre_security_group"
-  description = "Permitir acesso SSH, HTTP e MySQL"
+- resource "aws_security_group" "sre_sg" {
+- name        = "sre_security_group"
+- description = "Permitir acesso SSH, HTTP e MySQL"
 
-  ingress {
-    description = "Acesso SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["MEU_IP/32"] # Meu IP público
-  }
+ - ingress {
+    -description = "Acesso SSH"
+    -from_port   = 22
+    -to_port     = 22
+    -protocol    = "tcp"
+    -cidr_blocks = ["MEU_IP/32"] # Meu IP público
+  -}
 
-  ingress {
-    description = "Acesso HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Acesso liberado
-  }
+  -ingress {
+    -description = "Acesso HTTP"
+    -from_port   = 80
+    -to_port     = 80
+    -protocol    = "tcp"
+    -cidr_blocks = ["0.0.0.0/0"] # Acesso liberado
+  -}
 
-  ingress {
-    description = "Acesso ao MySQL"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Acesso liberado (por enquanto)
-  }
+  -ingress {
+    -description = "Acesso ao MySQL"
+    -from_port   = 3306
+    -to_port     = 3306
+    -protocol    = "tcp"
+    -cidr_blocks = ["0.0.0.0/0"] # Acesso liberado (por enquanto)
+  -}
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"] # Permite saída para qualquer IP
-  }
-}
+  -egress {
+    -from_port   = 0
+    -to_port     = 0
+    -protocol    = "-1"
+    -cidr_blocks = ["0.0.0.0/0"] # Permite saída para qualquer IP
+  -}
+-}
 # 5️⃣ Deploy da Infraestrutura
 - Após definir toda a configuração, rodei os seguintes comandos para provisionar os recursos na AWS:
 
