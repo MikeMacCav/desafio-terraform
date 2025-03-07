@@ -6,9 +6,9 @@ Este repositório contém a configuração da infraestrutura utilizando Terrafor
 # 1️⃣ Configuração do Terraform
 - Primeiro, defini a região da AWS onde minha instância será criada. Para isso, utilizei o seguinte código no arquivo main.tf:
 
-provider "aws" {
-  region = "us-east-1"
-}
+- provider "aws" {
+  - region = "us-east-1"
+- }
 # 2️⃣ Criação da Instância EC2
 - Configurei a instância EC2 com a AMI do Ubuntu 20.04 e o tipo t2.micro. Também especifiquei a chave SSH e o grupo de segurança:
 
@@ -41,36 +41,36 @@ _ MySQL (3306): Acesso liberado para qualquer IP (mas posso restringir depois)
 - description = "Permitir acesso SSH, HTTP e MySQL"
 
  - ingress {
-    -description = "Acesso SSH"
-    -from_port   = 22
-    -to_port     = 22
-    -protocol    = "tcp"
-    -cidr_blocks = ["MEU_IP/32"] # Meu IP público
-  -}
+    - description = "Acesso SSH"
+    - from_port   = 22
+    - to_port     = 22
+    - protocol    = "tcp"
+    - cidr_blocks = ["MEU_IP/32"] # Meu IP público
+  - }
 
-  -ingress {
-    -description = "Acesso HTTP"
-    -from_port   = 80
-    -to_port     = 80
-    -protocol    = "tcp"
-    -cidr_blocks = ["0.0.0.0/0"] # Acesso liberado
-  -}
+  - ingress {
+    - description = "Acesso HTTP"
+    - from_port   = 80
+    - to_port     = 80
+    - protocol    = "tcp"
+    - cidr_blocks = ["0.0.0.0/0"] # Acesso liberado
+  - }
 
-  -ingress {
-    -description = "Acesso ao MySQL"
-    -from_port   = 3306
-    -to_port     = 3306
-    -protocol    = "tcp"
-    -cidr_blocks = ["0.0.0.0/0"] # Acesso liberado (por enquanto)
-  -}
+  - ingress {
+    - description = "Acesso ao MySQL"
+    - from_port   = 3306
+    - to_port     = 3306
+    - protocol    = "tcp"
+    - cidr_blocks = ["0.0.0.0/0"] # Acesso liberado (por enquanto)
+  - }
 
-  -egress {
-    -from_port   = 0
-    -to_port     = 0
-    -protocol    = "-1"
-    -cidr_blocks = ["0.0.0.0/0"] # Permite saída para qualquer IP
-  -}
--}
+  - egress {
+    - from_port   = 0
+    - to_port     = 0
+    - protocol    = "-1"
+    - cidr_blocks = ["0.0.0.0/0"] # Permite saída para qualquer IP
+  - }
+- }
 # 5️⃣ Deploy da Infraestrutura
 - Após definir toda a configuração, rodei os seguintes comandos para provisionar os recursos na AWS:
 
