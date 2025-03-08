@@ -319,10 +319,11 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 ![image](https://github.com/user-attachments/assets/9653175d-23a9-4348-b56c-73cc9d0d5984)
 
 # Relatório completo da restrinção:
-F:\terraform\desafio-terraform>terraform apply -auto-approve
-- null_resource.deploy_containers: Refreshing state... [id=1573174304318784348]
-aws_key_pair.ssh_key: Refreshing state... [id=terraform-key]
-aws_security_group.instance_sg: Refreshing state... [id=sg-0c98dd5ff33ab0e6e]
+- F:\terraform\desafio-terraform>terraform apply -auto-approve
+- aws_security_group.instance_sg: Refreshing state... [id=sg-0c98dd5ff33ab0e6e]
+- aws_security_group.sre_sg: Refreshing state... [id=sg-00b4b91bda1f2a5ea]
+- aws_instance.app_server: Refreshing state... [id=i-0248580a70576caa3]
+- aws_key_pair.ssh_key: Refreshing state... [id=terraform-key]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -330,164 +331,116 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # aws_instance.app_server will be created
-  + resource "aws_instance" "app_server" {
-      + ami                                  = "ami-011e48799a29115e9"
-      + arn                                  = (known after apply)
-      + associate_public_ip_address          = (known after apply)
-      + availability_zone                    = (known after apply)
-      + cpu_core_count                       = (known after apply)
-      + cpu_threads_per_core                 = (known after apply)
-      + disable_api_stop                     = (known after apply)
-      + disable_api_termination              = (known after apply)
-      + ebs_optimized                        = (known after apply)
-      + enable_primary_ipv6                  = (known after apply)
-      + get_password_data                    = false
-      + host_id                              = (known after apply)
-      + host_resource_group_arn              = (known after apply)
-      + iam_instance_profile                 = (known after apply)
-      + id                                   = (known after apply)
-      + instance_initiated_shutdown_behavior = (known after apply)
-      + instance_lifecycle                   = (known after apply)
-      + instance_state                       = (known after apply)
-      + instance_type                        = "t2.micro"
-      + ipv6_address_count                   = (known after apply)
-      + ipv6_addresses                       = (known after apply)
-      + key_name                             = "terraform-key"
-      + monitoring                           = (known after apply)
-      + outpost_arn                          = (known after apply)
-      + password_data                        = (known after apply)
-      + placement_group                      = (known after apply)
-      + placement_partition_number           = (known after apply)
-      + primary_network_interface_id         = (known after apply)
-      + private_dns                          = (known after apply)
-      + private_ip                           = (known after apply)
-      + public_dns                           = (known after apply)
-      + public_ip                            = (known after apply)
-      + secondary_private_ips                = (known after apply)
-      + security_groups                      = [
-          + "sre_security_group",
-        ]
-      + source_dest_check                    = true
-      + spot_instance_request_id             = (known after apply)
-      + subnet_id                            = (known after apply)
-      + tags                                 = {
-          + "Name" = "DesafioTerraform-EC2"
+  # aws_instance.app_server will be destroyed
+  # (because aws_instance.app_server is not in configuration)
+  - resource "aws_instance" "app_server" {
+      - ami                                  = "ami-011e48799a29115e9" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:908027403552:instance/i-0248580a70576caa3" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1b" -> null
+      - cpu_core_count                       = 1 -> null
+      - cpu_threads_per_core                 = 1 -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-0248580a70576caa3" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t2.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "terraform-key" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-0d46374ea4a2679df" -> null
+      - private_dns                          = "ip-172-31-90-78.ec2.internal" -> null
+      - private_ip                           = "172.31.90.78" -> null
+      - public_dns                           = "ec2-18-212-21-45.compute-1.amazonaws.com" -> null
+      - public_ip                            = "18.212.21.45" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "sre_security_group",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-045676d0f71462abd" -> null
+      - tags                                 = {
+          - "Name" = "DesafioTerraform-EC2"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "DesafioTerraform-EC2"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-00b4b91bda1f2a5ea",
+        ] -> null
+        # (7 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
         }
-      + tags_all                             = {
-          + "Name" = "DesafioTerraform-EC2"
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+            # (1 unchanged attribute hidden)
         }
-      + tenancy                              = (known after apply)
-      + user_data                            = (known after apply)
-      + user_data_base64                     = (known after apply)
-      + user_data_replace_on_change          = false
-      + vpc_security_group_ids               = (known after apply)
 
-      + capacity_reservation_specification (known after apply)
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
 
-      + cpu_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
 
-      + ebs_block_device (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
 
-      + enclave_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 1 -> null
+          - http_tokens                 = "optional" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
 
-      + ephemeral_block_device (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
 
-      + instance_market_options (known after apply)
-
-      + maintenance_options (known after apply)
-
-      + metadata_options (known after apply)
-
-      + network_interface (known after apply)
-
-      + private_dns_name_options (known after apply)
-
-      + root_block_device (known after apply)
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 100 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 0 -> null
+          - volume_id             = "vol-09c3e27d6b61005bf" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp2" -> null
+            # (1 unchanged attribute hidden)
+        }
     }
 
-  # aws_security_group.sre_sg will be created
-  + resource "aws_security_group" "sre_sg" {
-      + arn                    = (known after apply)
-      + description            = "Permitir acesso SSH, HTTP e MySQL"
-      + egress                 = [
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + from_port        = 0
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "-1"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 0
-                # (1 unchanged attribute hidden)
-            },
-        ]
-      + id                     = (known after apply)
-      + ingress                = [
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + description      = "Acesso HTTP"
-              + from_port        = 80
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "tcp"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 80
-            },
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + description      = "Acesso ao MySQL"
-              + from_port        = 3306
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "tcp"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 3306
-            },
-          + {
-              + cidr_blocks      = [
-                  + "179.255.125.210/32",
-                ]
-              + description      = "Acesso SSH"
-              + from_port        = 22
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "tcp"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 22
-            },
-        ]
-      + name                   = "sre_security_group"
-      + name_prefix            = (known after apply)
-      + owner_id               = (known after apply)
-      + revoke_rules_on_delete = false
-      + tags_all               = (known after apply)
-      + vpc_id                 = (known after apply)
+  # aws_network_interface_sg_attachment.attach_sg will be created
+  + resource "aws_network_interface_sg_attachment" "attach_sg" {
+      + id                   = (known after apply)
+      + network_interface_id = "eni-0ec195e19a6f0f785"
+      + security_group_id    = "sg-00b4b91bda1f2a5ea"
     }
 
-  # null_resource.deploy_containers will be destroyed
-  # (because null_resource.deploy_containers is not in configuration)
-  - resource "null_resource" "deploy_containers" {
-      - id = "1573174304318784348" -> null
-    }
+Plan: 1 to add, 0 to change, 1 to destroy.
+aws_instance.app_server: Destroying... [id=i-0248580a70576caa3]
+aws_network_interface_sg_attachment.attach_sg: Creating...
+aws_network_interface_sg_attachment.attach_sg: Creation complete after 2s [id=sg-00b4b91bda1f2a5ea_eni-0ec195e19a6f0f785]
+                                              aws_instance.app_server: Still destroying... [id=i-0248580a70576caa3, 10s elapsed]
+aws_instance.app_server: Destruction complete after 12s
 
-Plan: 2 to add, 0 to change, 1 to destroy.
-null_resource.deploy_containers: Destroying... [id=1573174304318784348]
-null_resource.deploy_containers: Destruction complete after 0s
-aws_security_group.sre_sg: Creating...
-aws_security_group.sre_sg: Creation complete after 4s [id=sg-00b4b91bda1f2a5ea]
-aws_instance.app_server: Creating...
-aws_instance.app_server: Still creating... [14s elapsed]
-aws_instance.app_server: Creation complete after 14s [id=i-0248580a70576caa3]
-
-Apply complete! Resources: 2 added, 0 changed, 1 destroyed.
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
