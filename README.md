@@ -444,3 +444,81 @@ aws_network_interface_sg_attachment.attach_sg: Creation complete after 2s [id=sg
 aws_instance.app_server: Destruction complete after 12s
 
 Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+# Deploy 14/03/2025:
+![image](https://github.com/user-attachments/assets/9d7d613c-4b14-4bb0-b6dd-a9a421b8d01b)
+
+# Relatório completo:
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.app_server: Modifying... [id=i-0bb54181aed6221ec]
+aws_instance.app_server: Modifications complete after 4s [id=i-0bb54181aed6221ec]
+null_resource.deploy_docker: Creating...
+null_resource.deploy_docker: Provisioning with 'remote-exec'...
+null_resource.deploy_docker: Still creating... [10s elapsed]
+null_resource.deploy_docker: Still creating... [20s elapsed]
+null_resource.deploy_docker: Still creating... [30s elapsed]
+null_resource.deploy_docker (remote-exec): Connecting to remote host via SSH...
+null_resource.deploy_docker (remote-exec):   Host: 52.90.66.194
+null_resource.deploy_docker (remote-exec):   User: ubuntu
+null_resource.deploy_docker (remote-exec):   Password: false
+null_resource.deploy_docker (remote-exec):   Private key: true
+null_resource.deploy_docker (remote-exec):   Certificate: false
+null_resource.deploy_docker (remote-exec):   SSH Agent: false
+null_resource.deploy_docker (remote-exec):   Checking Host Key: false
+null_resource.deploy_docker (remote-exec):   Target Platform: unix
+null_resource.deploy_docker (remote-exec): Connected!
+null_resource.deploy_docker (remote-exec): DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+null_resource.deploy_docker (remote-exec):             Install the buildx component to build images with BuildKit:
+null_resource.deploy_docker (remote-exec):             https://docs.docker.com/go/buildx/
+
+null_resource.deploy_docker (remote-exec): Sending build context to Docker daemon  10.24kB
+null_resource.deploy_docker (remote-exec): Step 1/4 : FROM php:8.1-apache
+null_resource.deploy_docker (remote-exec):  ---> 9273bbba6cef
+null_resource.deploy_docker (remote-exec): Step 2/4 : RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 20a596373c49
+null_resource.deploy_docker (remote-exec): Step 3/4 : COPY . /var/www/html/
+null_resource.deploy_docker (remote-exec):  ---> 788ba47ecd2e
+null_resource.deploy_docker (remote-exec): Step 4/4 : EXPOSE 80
+null_resource.deploy_docker (remote-exec):  ---> Running in e0ca93d40f64
+null_resource.deploy_docker (remote-exec):  ---> Removed intermediate container e0ca93d40f64
+null_resource.deploy_docker (remote-exec):  ---> 8adf4b4a3c51
+null_resource.deploy_docker (remote-exec): Successfully built 8adf4b4a3c51
+null_resource.deploy_docker (remote-exec): Successfully tagged apache-container:latest
+null_resource.deploy_docker (remote-exec): DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+null_resource.deploy_docker (remote-exec):             Install the buildx component to build images with BuildKit:
+null_resource.deploy_docker (remote-exec):             https://docs.docker.com/go/buildx/
+
+null_resource.deploy_docker (remote-exec): Sending build context to Docker daemon  3.072kB
+null_resource.deploy_docker (remote-exec): Step 1/7 : FROM mysql:8.0
+null_resource.deploy_docker (remote-exec):  ---> 6616596982ed
+null_resource.deploy_docker (remote-exec): Step 2/7 : ENV MYSQL_ROOT_PASSWORD=metroid
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> f331a86caf2a
+null_resource.deploy_docker (remote-exec): Step 3/7 : ENV MYSQL_DATABASE=sre_desafio
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 7c2209178c78
+null_resource.deploy_docker (remote-exec): Step 4/7 : ENV MYSQL_USER=admin
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 81bea6b45fd9
+null_resource.deploy_docker (remote-exec): Step 5/7 : ENV MYSQL_PASSWORD=metroid
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 6d38f898e80c
+null_resource.deploy_docker (remote-exec): Step 6/7 : COPY init.sql /docker-entrypoint-initdb.d/
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 1a1ca10986ad
+null_resource.deploy_docker (remote-exec): Step 7/7 : EXPOSE 3306
+null_resource.deploy_docker (remote-exec):  ---> Using cache
+null_resource.deploy_docker (remote-exec):  ---> 0c63e71f6eb1
+null_resource.deploy_docker (remote-exec): Successfully built 0c63e71f6eb1
+null_resource.deploy_docker (remote-exec): Successfully tagged container-mysql:latest
+null_resource.deploy_docker (remote-exec): cc0103b6ee2b5fbbb9d1607d8b749e4a0cc54737e6a3c16d02604ae30aa9c93b
+null_resource.deploy_docker (remote-exec): 9159b5cbd262b3c28ee75864b22e50fab37f3455758fb69a38eb0a4f72161e05
+null_resource.deploy_docker: Creation complete after 39s [id=5201739934233569110]
+
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
